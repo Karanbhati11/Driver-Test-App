@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head') %>
+  <body>
+    <!-- navbar -->
+    <%- include('layouts/nav') %>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/background.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>Sign Up</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- login content -->
+    <div class="container" style="width: 30vw">
+      <form action="/usersignup" method="post">
+        <h4 style="color: red; text-align: center"><%- message %></h4>
+
+        <!-- Username input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example1">User name</label>
+          <input
+            type="text"
+            id="form2Example1"
+            class="form-control"
+            name="username"
+            placeholder="Enter you username"
+          />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Password</label>
+          <input
+            type="password"
+            id="form2Example2"
+            class="form-control"
+            name="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <!--Confirm Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Confirm Password</label>
+          <input
+            type="password"
+            id="form2Example2"
+            class="form-control"
+            name="cpassword"
+            placeholder="confirm your password"
+          />
+        </div>
+        <!--UserType input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">User Type</label>
+          <select name="usertype" class="dropdown">
+            <option value="Driver" class="dropdown-item">Driver</option>
+            <option value="Examiner" class="dropdown-item">Examiner</option>
+            <option value="Admin" class="dropdown-item">Admin</option>
+          </select>
+        </div>
+
+        <!-- Submit button -->
+        <input
+          type="submit"
+          value="Sign Up"
+          class="btn btn-primary btn-block mb-4"
+        />
+
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Already a member? <a href="login">Login</a></p>
+        </div>
+      </form>
+    </div>
+    <!-- footer -->
+    <%- include('layouts/footer') %>
+
+    <!-- scripts -->
+    <%- include('layouts/script') %>
+  </body>
+</html>

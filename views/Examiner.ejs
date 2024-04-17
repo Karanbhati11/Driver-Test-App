@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('layouts/head'); -%>
+  </head>
+  <body>
+    <!-- Navigation-->
+    <%- include('layouts/nav'); -%>
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/background.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="site-heading">
+              <h1>Examiner</h1>
+              <span class="subheading">Check your Exams Here</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <!-- Display User Data -->
+          <% if (userdata) { %>
+          <h2>User Data</h2>
+          <p>First Name: <%= userdata.firstname %></p>
+          <p>Last Name: <%= userdata.lastname %></p>
+          <% } %>
+
+          <!-- Display Car Details -->
+          <% if (carDetails) { %>
+          <h2>Car Details</h2>
+          <p>Make: <%= carDetails.make %></p>
+          <p>Model: <%= carDetails.model %></p>
+          <p>Year: <%= carDetails.year %></p>
+          <p>Plate Number: <%= carDetails.platno %></p>
+          <% if(userdata?.Comment ) { %>
+          <p>Comment: <%= userdata.Comment %></p>
+          <p>TestResult: <%= userdata.TestResult %></p>
+          <% } else if(userdata) { %>
+          <form action="/comment" method="post">
+            <label for="comment">Add Comment</label>
+            <input type="text" name="comment" placeholder="add comments" />
+            <input
+              hidden
+              type="text"
+              name="userId"
+              placeholder="add comments"
+              value="<%- userdata?.userId %>"
+            />
+            <h4>Test Result</h4>
+            <div style="display: flex">
+              <label for="pass">Pass</label>
+              <input type="radio" id="pass" name="testResult" value="Pass" />
+              <label for="fail">Fail</label>
+              <input type="radio" id="fail" name="testResult" value="Fail" />
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </form>
+          <% }%> <% } %> <% if((appointmentsG || appointmentsG2) && !userdata) {
+          %>
+          <form method="get" action="/examiner">
+            <label for="date">Select Date</label>
+
+            <input
+              type="date"
+              name="date"
+              style="margin: 10px"
+              value="<%= date %>"
+              onchange="this.form.submit()"
+            />
+          </form>
+          <% } %>
+
+          <!-- Display G2 Appointments -->
+          <% if (appointmentsG2.length > 0 && !userdata) { %>
+          <h2>G2 Appointments</h2>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: row;
+            "
+          >
+            <% appointmentsG2.forEach((appointment) => { %>
+            <form action="/examiner" method="post" style="margin: 5px">
+              <button
+                class="appointment-button btn btn-primary"
+                data-time="<%= appointment.time %>"
+              >
+                <%= appointment.time %>
+              </button>
+              <input
+                hidden
+                class="appointment-button"
+                value="<%= appointment._id %>"
+                name="appointment_id_g2"
+              />
+            </form>
+            <% }); %>
+          </div>
+          <% } %>
+
+          <!-- Display G Appointments -->
+          <% if (appointmentsG.length > 0 && !userdata) { %>
+
+          <!-- Divider -->
+          <hr class="my-4" />
+          <h2>G Appointments</h2>
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: row;
+            "
+          >
+            <% appointmentsG.forEach((appointment) => { %>
+            <form action="/examiner" method="post" style="margin: 5px">
+              <button
+                class="appointment-button btn btn-primary"
+                data-time="<%= appointment?.time %>"
+              >
+                <%= appointment?.time %>
+              </button>
+              <input
+                hidden
+                class="appointment-button"
+                value="<%= appointment._id %>"
+                name="appointment_id_g"
+              />
+            </form>
+            <% }); %>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('layouts/footer'); -%>
+    <!-- Scripts -->
+    <%- include('layouts/script'); -%>
+    <script>
+      document
+        .getElementById("datePicker")
+        .addEventListener("change", function () {
+          this.form.submit();
+        });
+    </script>
+  </body>
+</html>

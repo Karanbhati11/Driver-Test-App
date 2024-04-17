@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head') %>
+  <body>
+    <!-- navbar -->
+    <%- include('layouts/nav') %>
+    <!-- header -->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/background.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>G Test</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container" style="max-width: 30vw">
+      <div class="container" style="max-width: 30vw">
+        <h4 style="color: red; text-align: center"><%- message %></h4>
+
+        <form method="post" action="/gpageupdate">
+          <!-- Personal Information section -->
+          <div class="mb-4">
+            <h4 class="mb-4">Personal Information</h4>
+            <!-- First Name input -->
+            <div class="form-group mb-4">
+              <label class="form-label" for="firstname">First Name</label>
+              <input
+                type="text"
+                id="firstname"
+                class="form-control"
+                name="firstName"
+                placeholder="Enter your first name"
+                value="<%= response.firstname || '' %>"
+                disabled
+              />
+            </div>
+            <div class="form-group mb-4">
+              <label class="form-label" for="lastname">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                class="form-control"
+                name="lastName"
+                placeholder="Enter your last name"
+                value="<%= response.lastname || '' %>"
+                disabled
+              />
+            </div>
+            <div class="form-group mb-4">
+              <label class="form-label" for="License_No">License Number</label>
+              <input
+                type="text"
+                id="License_No"
+                class="form-control"
+                name="licenseNumber"
+                placeholder="Enter your license number"
+                value="<%= response.License_No || '' %>"
+                disabled
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label class="form-label" for="age">Age</label>
+              <input
+                type="text"
+                id="age"
+                class="form-control"
+                name="age"
+                placeholder="Enter your age"
+                value="<%= response.Age || '' %>"
+                disabled
+              />
+            </div>
+
+            <!-- Car Information section -->
+            <div class="mb-4">
+              <h4 class="mb-4">Car Information</h4>
+              <div class="form-group mb-4">
+                <label class="form-label" for="carMake">Car Make</label>
+                <input
+                  type="text"
+                  id="carMake"
+                  class="form-control"
+                  name="carMake"
+                  placeholder="Enter your car make"
+                  value="<%= response.car_details.make || '' %>"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="carModel">Car Model</label>
+                <input
+                  type="text"
+                  id="carModel"
+                  class="form-control"
+                  name="carModel"
+                  placeholder="Enter your car model"
+                  value="<%= response.car_details.model || '' %>"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="carYear">Car Year</label>
+                <input
+                  type="text"
+                  id="carYear"
+                  class="form-control"
+                  name="carYear"
+                  placeholder="Enter your car year"
+                  value="<%= response.car_details.year || '' %>"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="carPlateNo"
+                  >Car Plate Number</label
+                >
+                <input
+                  type="text"
+                  id="plateNumber"
+                  class="form-control"
+                  name="plateNumber"
+                  placeholder="Enter your car plate number"
+                  value="<%= response.car_details.platno || '' %>"
+                />
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <input
+              value="Update"
+              type="submit"
+              class="btn btn-primary btn-block mb-4"
+            />
+          </div>
+        </form>
+        <% if(notBooked) { %>
+          <form
+          method="get"
+          action="/G"
+          id="gappointmentForm"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <div>
+            <label for="date">Select Date</label>
+            <input
+              type="date"
+              name="date"
+              style="margin: 10px"
+              value="<%= date %>"
+              min="<%= minDate %>"
+              onchange="this.form.submit()"
+            />
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <% for (let i=0; i< times.length ;i++){ %> <input style="color: black;" type="button"
+            class="time-slotg btn btn-outline-primary" aria-pressed="false"
+            name="<%-times[i].time %>" value="<%- times[i].time %>" <%-
+            times[i].isTimeSlotTaken ? "disabled" : "" %> /> <%}%>
+          </div>
+          <!-- Submit button -->
+          <input
+            type="submit"
+            value="Book"
+            class="btn btn-dark btn-block mb-4"
+            style="margin: 10px"
+          />
+        </form>
+          <%} else if(slotDetails) {%>
+           Booking Date: <span><%= slotDetails.date%></span>
+           Booking Time: <span><%= slotDetails.time%></span>
+          <%} else if (TestResult && Comment){ %>
+            <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;margin: 20px;">
+             <h4>Test Result</h4> <span><%= TestResult%></span>
+             <h4>Comment</h4> <span><%= Comment%></span>
+            </div>
+           <%} %>
+      </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <%- include('layouts/footer') %>
+
+    <!-- scripts -->
+    <%- include('layouts/script') %>
+  </body>
+</html>

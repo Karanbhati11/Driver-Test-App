@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layouts/head') %>
+  <body>
+    <!-- navbar -->
+    <%- include('layouts/nav') %>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/background.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>Login</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- login content -->
+    <div class="container" style="width: 30vw">
+      <h4 style="color: red; text-align: center"><%- message %></h4>
+
+      <form method="post" action="/userlogin">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example1">User name</label>
+          <input
+            type="text"
+            id="form2Example1"
+            class="form-control"
+            name="username"
+            placeholder="Enter you username"
+          />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Password</label>
+          <input
+            type="password"
+            id="form2Example2"
+            class="form-control"
+            name="password"
+            placeholder="Enter your password"
+          />
+        </div>
+
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="form2Example31"
+                checked
+              />
+              <label class="form-check-label" for="form2Example31">
+                Remember me
+              </label>
+            </div>
+          </div>
+
+          <div class="col">
+            <!-- Simple link -->
+            <a href="#!">Forgot password?</a>
+          </div>
+        </div>
+
+        <!-- Submit button -->
+        <input
+          type="submit"
+          value="Login In"
+          class="btn btn-primary btn-block mb-4"
+        />
+
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Not a member? <a href="signup">SignUp</a></p>
+        </div>
+      </form>
+    </div>
+    <!-- footer -->
+    <%- include('layouts/footer') %>
+
+    <!-- scripts -->
+    <%- include('layouts/script') %>
+  </body>
+</html>

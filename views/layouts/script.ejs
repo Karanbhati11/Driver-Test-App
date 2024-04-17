@@ -1,0 +1,167 @@
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="../../public/js/scripts.js"></script>
+
+<script>
+  document.getElementById("g2_page_btn").addEventListener("click", function () {
+    window.location.href = "/G2"; // Redirect to G2 page
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let selectedTime;
+
+    // for g2 page
+    const timeslotG2 = document.querySelectorAll(".time-slotg2");
+
+    timeslotG2.forEach(function (slot) {
+      slot.addEventListener("click", function () {
+        const time = this.getAttribute("name");
+        // Check if the element already has the class
+        if (this.classList.contains("btn-primary")) {
+          this.classList.remove("btn-primary");
+        } else {
+          // Optionally, remove 'btn-primary' from all other slots if only one selection is allowed
+          selectedTime = time;
+          timeslotG2.forEach((slot) => slot.classList.remove("btn-primary"));
+
+          // Add 'btn-primary' to the clicked slot
+          this.classList.add("btn-primary");
+        }
+      });
+    });
+    document
+      .getElementById("userappointmentForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent normal form submission
+        fetch("/g2createuser", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date: document.querySelector('[name="date"]').value,
+            selectedTimeSlots: selectedTime,
+          }),
+        })
+          .then((response) => {
+            response.json();
+            window.location.reload();
+            alert("appointment booked!");
+          })
+          .then((data) => {
+            // console.log(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let selectedTime;
+
+    // for g2 page
+    const timeslotG2 = document.querySelectorAll(".time-slotg");
+
+    timeslotG2.forEach(function (slot) {
+      slot.addEventListener("click", function () {
+        const time = this.getAttribute("name");
+        // Check if the element already has the class
+        if (this.classList.contains("btn-primary")) {
+          this.classList.remove("btn-primary");
+        } else {
+          // Optionally, remove 'btn-primary' from all other slots if only one selection is allowed
+          selectedTime = time;
+          timeslotG2.forEach((slot) => slot.classList.remove("btn-primary"));
+
+          // Add 'btn-primary' to the clicked slot
+          this.classList.add("btn-primary");
+        }
+      });
+    });
+    document
+      .getElementById("gappointmentForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent normal form submission
+        fetch("/gpageupdate", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date: document.querySelector('[name="date"]').value,
+            selectedTimeSlots: selectedTime,
+          }),
+        })
+          .then((response) => {
+            response.json();
+            window.location.reload();
+            alert("appointment booked!");
+          })
+          .then((data) => {
+            // console.log(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let selectedTimes = [];
+    // for appointbooking page admin
+
+    const timeSlots = document.querySelectorAll(".time-slot");
+
+    timeSlots.forEach((slot) => {
+      slot.addEventListener("click", function () {
+        const time = this.getAttribute("name");
+        // Toggle selection in the array
+        if (selectedTimes.includes(time)) {
+          selectedTimes = selectedTimes.filter((t) => t !== time);
+          this.classList.remove("btn-primary");
+          this.classList.add("btn-outline-primary");
+        } else {
+          selectedTimes.push(time);
+          this.classList.add("btn-primary");
+          this.classList.remove("btn-outline-primary");
+        }
+      });
+    });
+    // Example form submission with fetch API
+    document
+      .getElementById("appointmentform")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent normal form submission
+        fetch("/appointment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date: document.querySelector('[name="date"]').value,
+            selectedTimeSlots: selectedTimes,
+          }),
+        })
+          .then((response) => {
+            response.json();
+            window.location.reload();
+            alert("Slot Created!");
+          })
+          .then((data) => {
+            // console.log(data);
+            // Handle response
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+  });
+</script>
